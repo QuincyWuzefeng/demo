@@ -1,0 +1,13 @@
+version: '3'
+services:
+  jupyterhub:
+    image: jupyterhub/jupyterhub:latest
+    user: test  # 使用 root 用户以便于配置
+    environment:
+      JUPYTERHUB_ENABLE_ADMIN_ACCESS: "yes"  # 允许管理员访问
+      JUPYTERHUB_ADMIN_USERS: "admin"  # 管理员用户名
+    volumes:
+      - ./jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py  # 挂载配置文件
+    ports:
+      - "8000:8000"  # 将 JupyterHub 的端口映射到主机端口
+    command: ["jupyterhub", "-f", "/srv/jupyterhub/jupyterhub_config.py"]
